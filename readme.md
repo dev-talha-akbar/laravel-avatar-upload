@@ -1,3 +1,11 @@
+## Date Created
+13 January 16
+
+## CodeCanyon Response
+4 Sales
+
+1 5-star Review for Code Quality
+
 ## Installation
 ###Step 1 The Routes
 Add the following routes to your `app/routes.php`:
@@ -32,6 +40,7 @@ Open your Laravel config file `config/app.php` and add the following lines:
 
 In the `$providers` array, add:
 `Intervention\Image\ImageServiceProvider::class`
+
 In the `$aliases` array, add:
 `'Image' => Intervention\Image\Facades\Image::class`
 
@@ -45,6 +54,6 @@ Maximum size of uploaded avatar to save. Default is `180`
 ####AVATAR_UPLOAD_EXTENSION
 The extension of uploaded avatar. Default is `jpg`
 ####AVATAR_DEFAULT_PATH
-The path to default avatar relative to public folder to show if the user does not have one. Providing this will disable Gravatar.
-###GRAVATAR_DEFAULT</strong>
+The path to default avatar relative to public folder to show if the user does not have one. Providing this will disable Gravatar
+####GRAVATAR_DEFAULT
 The default avatar to show if the user does not have one on gravatar.com. Default is `identicon`. You can see all of the possible defaults [here](https://en.gravatar.com/site/implement/images/#default-image)
