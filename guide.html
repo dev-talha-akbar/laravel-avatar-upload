@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Laravel Avatar Upload</title>
+
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="page-header">
+					<h1>Setup Guide</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3><span class="text-primary">Step 0</span> The Extraction</h3>
+				<p>Extract the archive to your Laravel project. All necessary files will automatically adjust.</p>
+			</div>
+			<div class="col-md-12">
+				<h3><span class="text-primary">Step 1</span> The Routes</h3>
+				<p>Add the following routes to your <label class="label label-primary">app/routes.php</label></p>
+				<pre class="prettyprint">
+// The following route is used to show the avatar upload form
+Route::get('avatar/upload', 'AvatarController@create');
+
+// The following route is used to store the avatar
+Route::post('avatar/upload', 'AvatarController@store');
+
+// The following route fetches the avatar of current logged in user
+Route::get('avatar/image/{size}', 'AvatarController@fetch');
+
+// The following route fetches the avatar of given user
+Route::get('avatar/image/{id}/{size}', 'AvatarController@fetchGiven');
+				</pre>
+			</div>
+			<div class="col-md-12">
+				<h3><span class="text-primary">Step 2</span> The Migration</h3>
+				<p>Run the following command:</p>
+				<pre class="prettyprint">php artisan migrate</pre>
+				<p>And, add the following relationship in your <label class="label label-primary">User.php</label> model:</p>
+				<pre class="prettyprint">
+public function avatar()
+{
+	return $this->hasOne('App\Avatar');
+}
+				</pre>
+			</div>
+			<div class="col-md-12">
+				<h3><span class="text-primary">Step 3</span> Setting up Intervention Image</h3>
+				<p>You need to require <label class="label label-primary">intervention/image</label> package. For this, run the following command in your laravel project root:</p>
+				<pre class="prettyprint">composer require intervention/image</pre>
+				<p>Open your Laravel config file <label class="label label-primary">config/app.php</label> and add the following lines:</p>
+				<p>In the <label class="label label-primary">$providers</label> array add the service providers for this package.
+				<pre class="prettyprint">Intervention\Image\ImageServiceProvider::class</pre>
+				<p>Add the facade of this package to the <label class="label label-primary">$aliases</label> array.</p>
+				<pre class="prettyprint">'Image' => Intervention\Image\Facades\Image::class</pre>
+			</div>
+			<div class="col-md-12">
+				<h3><span class="text-primary">Step 4</span> The Options</h3>
+				<p>Although, there are not much options but you may want to change some of the behaviour.</p>
+				<strong>AVATAR_UPLOAD_PATH</strong>
+				<p>The path to upload avatars relative to public folder. Default is <label class="label label-primary">uploads/avatars</label></p>
+				<strong>AVATAR_UPLOAD_SIZE</strong>
+				<p>Maximum size of uploaded avatar to save. Default is <label class="label label-primary">180</label></p>
+				<strong>AVATAR_UPLOAD_EXTENSION</strong>
+				<p>The extension of uploaded avatar. Default is <label class="label label-primary">jpg</label></p>
+				<strong>AVATAR_DEFAULT_PATH</strong>
+				<p>The path to default avatar relative to public folder to show if the user does not have one. Providing this will disable Gravatar.</p>
+				<strong>GRAVATAR_DEFAULT</strong>
+				<p>The default avatar to show if the user does not have one on gravatar.com. Default is <label class="label label-primary">identicon</label>. You can see all of the possible defaults <a href="https://en.gravatar.com/site/implement/images/#default-image">here</a></p>
+			</div>
+		</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="page-header">
+						<h1>Usage Guide</h1>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+				<p>To show avatar of current logged in user anywhere in your view, just include an img tag like this:</p>
+	<pre class="prettyprint">
+	&lt;img src="{{ url('avatar/image/{SIZE HERE}') }}" alt="Current logged in user avatar"&gt;
+	</pre>
+				<p>To show avatar of specific user, use:</p>
+	<pre class="prettyprint">
+	&lt;img src="{{ url('avatar/image/{ID OF USER HERE}/{SIZE HERE}') }}" alt="User avatar"&gt;
+	</pre>
+				<div class="alert alert-danger">
+					<h3>Upload Form</h3>
+					<p>While accessing <label class="label label-primary">avatar/upload</label>, don't forget to style the form or to include Bootstrap otherwise, form will appear ugly.</p>
+				</div>
+				</div>
+			</div>
+		<br><br><br><br><br><br><br><br><br>
+	</div>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+</body>
+</html>
